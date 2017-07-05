@@ -2,23 +2,143 @@
 <!-- saved from url=(0046)http://www.ashasexualhealth.org/sexual-health/ -->
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-	
-	
 <script>
 document.onmousemove = mouseCoord;
 document.onclick = clicked;
+//var movements = 0;
+//var dt = new Date();
+//var utcDate = dt.toUTCString();
 
 function mouseCoord(e) {
-	tempX = e.pageX
-	tempY = e.pageY
-	console.log("movement: " + tempX + " " + tempY + ", UTC: " + Date.now());
+  tempX = e.pageX
+  tempY = e.pageY
+  var coord = "(" + tempX + ", " + tempY + ")"
+  var eventType = "movement"
+  var xmlhttp;
+  if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+    xmlhttp=new XMLHttpRequest();
+  } else {// code for IE6, IE5
+      xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+    }
+  xmlhttp.open("GET","phpwrite2.php?webevent=" + eventType + "&content=" + coord,true);
+  xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+  xmlhttp.send();
+//  xmlhttp.send("content=" + coord);
+  //<input type='text' name='name' id='name' />
+
 }
 
 function clicked(e) {
 	clickX = e.pageX
 	clickY = e.pageY
-	console.log("clicked: " + clickX + ", " + clickY + ", UTC: " + Date.now());
+	var click = "(" + clickX + ", " + clickY + ")"
+  var event = "clicked"
+	var xmlhttp;
+	if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+ 		xmlhttp=new XMLHttpRequest();
+ 	} else {// code for IE6, IE5
+  		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  	}
+  xmlhttp.open("GET","phpwrite2.php?webevent=" + event + "&content=" + click,true);
+  xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+  xmlhttp.send();
+
 }
+
+function getSelectedText() {
+    var eventType = "highlighted";
+    var txt = "";
+    if (typeof window.getSelection != "undefined") {
+        txt += window.getSelection().toString();
+    } else if (typeof document.selection != "undefined" && document.selection.type == "Text") {
+        txt += document.selection.createRange().text;
+    }
+    var xmlhttp;
+	if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+ 		xmlhttp=new XMLHttpRequest();
+ 	} else {// code for IE6, IE5
+  		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  	}
+  xmlhttp.open("GET","phpwrite2.php?webevent=" + eventType + "&content=" + txt,true);
+  xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+  xmlhttp.send();
+
+}
+
+document.onmouseup = getSelectedText;
+document.onkeyup = getSelectedText;
+
+document.onkeypress = function(evt) {
+    evt = evt || window.event;
+    var charCode = evt.keyCode || evt.which;
+    var eventType = "key pressed"
+    var charStr = "\"" + String.fromCharCode(charCode) + "\"";
+    var xmlhttp;
+	if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+ 		xmlhttp=new XMLHttpRequest();
+ 	} else {// code for IE6, IE5
+  		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  	}
+  xmlhttp.open("GET","phpwrite2.php?webevent=" + eventType + "&content=" + charStr,true);
+  xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+  xmlhttp.send();
+
+};
+window.onresize = resize;
+
+function resize() {
+	var w = window.outerWidth;
+    var h = window.outerHeight;
+    var eventType = "resize"
+    var txt = "Window size: width=" + w + ", height=" + h;
+    //document.getElementById("demo").innerHTML = txt;
+    var xmlhttp;
+	if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+ 		xmlhttp=new XMLHttpRequest();
+ 	} else {// code for IE6, IE5
+  		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  	}
+  xmlhttp.open("GET","phpwrite2.php?webevent=" + eventType + "&content=" + txt,true);
+  xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+  xmlhttp.send();
+
+}
+
+function getDocHeight() {
+    var D = document;
+    return Math.max(
+        D.body.scrollHeight, D.documentElement.scrollHeight,
+        D.body.offsetHeight, D.documentElement.offsetHeight,
+        D.body.clientHeight, D.documentElement.clientHeight
+    )
+}
+ 
+//var docheight = getDocHeight()
+
+function amountscrolled(){
+    var eventType = "scrolled"
+    var winheight= window.innerHeight || (document.documentElement || document.body).clientHeight
+    var docheight = getDocHeight()
+    var scrollTop = window.pageYOffset || (document.documentElement || document.body.parentNode || document.body).scrollTop
+    var trackLength = docheight - winheight
+    var pctScrolled = Math.floor(scrollTop/trackLength * 100) // gets percentage scrolled (ie: 80 or NaN if tracklength == 0)
+    var scrollString = pctScrolled + '% scrolled '
+
+    var xmlhttp;
+	if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+ 		xmlhttp=new XMLHttpRequest();
+ 	} else {// code for IE6, IE5
+  		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  	}
+  xmlhttp.open("GET","phpwrite2.php?webevent=" + eventType + "&content=" + scrollString,true);
+  xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+  xmlhttp.send();
+
+}
+ 
+window.addEventListener("scroll", function(){
+    amountscrolled()
+}, false)
 
 </script>
 
@@ -254,7 +374,7 @@ body {background-color:#56a1d5;background-image:url(/wp-content/uploads/2014/08/
 							<h1 class="page-title">Understanding Sexual Health</h1>
 
 							
-							<p><img class="lazy alignleft wp-image-76 size-medium" src="./asha_files/couple_embrace-300x199.png" data-lazy-type="image" data-lazy-src="http://www.ashasexualhealth.org/wp-content/uploads/2014/08/couple_embrace-300x199.png" alt="What is sexual health " width="300" height="199" data-lazy-srcset="http://www.ashasexualhealth.org/wp-content/uploads/2014/08/couple_embrace-300x199.png 300w, http://www.ashasexualhealth.org/wp-content/uploads/2014/08/couple_embrace.png 1005w" sizes="(max-width: 300px) 100vw, 300px"><noscript>&lt;img class="alignleft wp-image-76 size-medium" src="http://www.ashasexualhealth.org/wp-content/uploads/2014/08/couple_embrace-300x199.png" alt="What is sexual health " width="300" height="199" srcset="http://www.ashasexualhealth.org/wp-content/uploads/2014/08/couple_embrace-300x199.png 300w, http://www.ashasexualhealth.org/wp-content/uploads/2014/08/couple_embrace.png 1005w" sizes="(max-width: 300px) 100vw, 300px" /&gt;</noscript>yuhhhh Coming up with a definition of sexual health is a difficult task, as each culture, sub-culture, and individual has different standards of sexual health. ASHA believes that sexual health includes far more than avoiding disease or unplanned pregnancy. We also believe that having a sexually transmitted infection or unwanted pregnancy does not prevent someone from being or becoming sexually healthy.</p>
+							<p><img class="lazy alignleft wp-image-76 size-medium" src="./asha_files/couple_embrace-300x199.png" data-lazy-type="image" data-lazy-src="http://www.ashasexualhealth.org/wp-content/uploads/2014/08/couple_embrace-300x199.png" alt="What is sexual health " width="300" height="199" data-lazy-srcset="http://www.ashasexualhealth.org/wp-content/uploads/2014/08/couple_embrace-300x199.png 300w, http://www.ashasexualhealth.org/wp-content/uploads/2014/08/couple_embrace.png 1005w" sizes="(max-width: 300px) 100vw, 300px"><noscript>&lt;img class="alignleft wp-image-76 size-medium" src="http://www.ashasexualhealth.org/wp-content/uploads/2014/08/couple_embrace-300x199.png" alt="What is sexual health " width="300" height="199" srcset="http://www.ashasexualhealth.org/wp-content/uploads/2014/08/couple_embrace-300x199.png 300w, http://www.ashasexualhealth.org/wp-content/uploads/2014/08/couple_embrace.png 1005w" sizes="(max-width: 300px) 100vw, 300px" /&gt;</noscript>Coming up with a definition of sexual health is a difficult task, as each culture, sub-culture, and individual has different standards of sexual health. ASHA believes that sexual health includes far more than avoiding disease or unplanned pregnancy. We also believe that having a sexually transmitted infection or unwanted pregnancy does not prevent someone from being or becoming sexually healthy.</p>
 <p>Here is ASHA’s definition of sexual health:</p>
 <p>Sexual health is the ability to embrace and enjoy our sexuality throughout our lives. It is an important part of our physical and emotional health. Being sexually healthy means:</p>
 <ul class="bullet">
