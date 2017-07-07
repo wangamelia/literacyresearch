@@ -13,7 +13,7 @@ $password = "literacy";
 $dbname = "eye_tracking_events";
 $stringEvent = $_GET["webevent"];
 $stringContent = $_GET["content"];
-
+$mysqldate = date("Y-m-d H:i:s"); 
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -22,8 +22,8 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 } 
 
-$sql = "INSERT INTO events (participant_id, event_type, content)
-VALUES (1234, '$stringEvent', '$stringContent')";
+$sql = "INSERT INTO events (participant_id, event_type, datetime, content)
+VALUES (1234, '$stringEvent', '$mysqldate', '$stringContent')";
 
 if ($conn->query($sql) === TRUE) {
     echo "New record created successfully";
