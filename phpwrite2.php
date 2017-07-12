@@ -11,8 +11,9 @@ $servername = "localhost";
 $username = "root";
 $password = "literacy";
 $dbname = "eye_tracking_events";
-$stringEvent = $_GET["webevent"];
-$stringContent = $_GET["content"];
+$title = $_POST["title"];
+$stringEvent = $_POST["webevent"];
+$stringContent = $_POST["content"];
 $mysqldate = date("Y-m-d H:i:s"); 
 
 // Create connection
@@ -22,8 +23,8 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 } 
 
-$sql = "INSERT INTO events (participant_id, event_type, datetime, content)
-VALUES (1234, '$stringEvent', '$mysqldate', '$stringContent')";
+$sql = "INSERT INTO events (participant_id, page_title, event_type, datetime, content)
+VALUES (1234, '$title', '$stringEvent', '$mysqldate', '$stringContent')";
 
 if ($conn->query($sql) === TRUE) {
     echo "New record created successfully";
