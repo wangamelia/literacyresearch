@@ -15,6 +15,8 @@ $title = $_POST["title"];
 $stringEvent = $_POST["webevent"];
 $stringContent = $_POST["content"];
 $mysqldate = date("Y-m-d H:i:s"); 
+$pageOffset = $_POST["offset"];
+
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -23,8 +25,8 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 } 
 
-$sql = "INSERT INTO events (participant_id, page_title, event_type, datetime, content)
-VALUES (1234, '$title', '$stringEvent', '$mysqldate', '$stringContent')";
+$sql = "INSERT INTO events (participant_id, page_title, event_type, datetime, content, page_offset)
+VALUES (1234, '$title', '$stringEvent', '$mysqldate', '$stringContent', '$pageOffset')";
 
 if ($conn->query($sql) === TRUE) {
     echo "New record created successfully";
