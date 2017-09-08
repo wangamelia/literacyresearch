@@ -1,5 +1,6 @@
 document.onmousemove = mouseCoord;
 document.onclick = clicked;
+
 //var movements = 0;
 //var dt = new Date();
 //var utcDate = dt.toUTCString();
@@ -10,6 +11,7 @@ function mouseCoord(e) {
   var title = document.title;
   var coord = "(" + tempX + ", " + tempY + ")"
   var eventType = "movement"
+  var offsetVar = window.scrollY + "px";
   var xmlhttp;
   if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
     xmlhttp=new XMLHttpRequest();
@@ -18,7 +20,7 @@ function mouseCoord(e) {
     }
   xmlhttp.open("POST","phpwrite2.php",true);
   xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-  xmlhttp.send("title=" + title + "&webevent=" + eventType + "&content=" + coord);
+  xmlhttp.send("title=" + title + "&webevent=" + eventType + "&content=" + coord + "&offset=" + offsetVar);
 //  xmlhttp.send("content=" + coord);
   //<input type='text' name='name' id='name' />
 
@@ -38,7 +40,7 @@ function clicked(e) {
     }
   xmlhttp.open("POST","phpwrite2.php",true);
   xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-  xmlhttp.send("title=" + title + "&webevent=" + event + "&content=" + click);
+  xmlhttp.send("title=" + title + "&webevent=" + event + "&content=" + click+ "&offset=" + offsetVar);
 
 }
 
@@ -59,7 +61,7 @@ function getSelectedText() {
     }
   xmlhttp.open("POST","phpwrite2.php",true);
   xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-  xmlhttp.send("title=" + title + "&webevent=" + eventType + "&content=" + txt);
+  xmlhttp.send("title=" + title + "&webevent=" + eventType + "&content=" + txt+ "&offset=" + offsetVar);
 
 }
 
@@ -80,7 +82,7 @@ document.onkeypress = function(evt) {
     }
   xmlhttp.open("POST","phpwrite2.php",true);
  // xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-  xmlhttp.send("title=" + title + "&webevent=" + eventType + "&content=" + charStr);
+  xmlhttp.send("title=" + title + "&webevent=" + eventType + "&content=" + charStr+ "&offset=" + offsetVar);
 
 };
 window.onresize = resize;
@@ -100,7 +102,7 @@ function resize() {
     }
   xmlhttp.open("POST","phpwrite2.php",true);
   xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-  xmlhttp.send("title=" + title + "&webevent=" + eventType + "&content=" + txt);
+  xmlhttp.send("title=" + title + "&webevent=" + eventType + "&content=" + txt+ "&offset=" + offsetVar);
 
 }
 
@@ -133,7 +135,7 @@ function amountscrolled(){
     }
   xmlhttp.open("POST","phpwrite2.php",true);
   xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-  xmlhttp.send("title=" + title + "&webevent=" + eventType + "&content=" + scrollString);
+  xmlhttp.send("title=" + title + "&webevent=" + eventType + "&content=" + scrollString+ "&offset=" + offsetVar);
 
 }
  
