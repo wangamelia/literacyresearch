@@ -11,14 +11,14 @@ function mouseCoord(e) {
   var title = document.title;
   var coord = "(" + tempX + ", " + tempY + ")"
   var eventType = "movement"
-  var offsetVar = window.scrollY + "px";
+  var offsetVar = document.documentElement.scrollTop + "px";
   var xmlhttp;
   if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
     xmlhttp=new XMLHttpRequest();
   } else {// code for IE6, IE5
       xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
     }
-  xmlhttp.open("POST","phpwrite2.php",true);
+  xmlhttp.open("POST","/literacyresearch/phpwrite2.php",true);
   xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
   xmlhttp.send("title=" + title + "&webevent=" + eventType + "&content=" + coord + "&offset=" + offsetVar);
 //  xmlhttp.send("content=" + coord);
@@ -32,13 +32,14 @@ function clicked(e) {
   var title = document.title;
   var click = "(" + clickX + ", " + clickY + ")"
   var event = "clicked"
+  var offsetVar = document.documentElement.scrollTop + "px";
   var xmlhttp;
   if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
     xmlhttp=new XMLHttpRequest();
   } else {// code for IE6, IE5
       xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
     }
-  xmlhttp.open("POST","phpwrite2.php",true);
+  xmlhttp.open("POST","/literacyresearch/phpwrite2.php",true);
   xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
   xmlhttp.send("title=" + title + "&webevent=" + event + "&content=" + click+ "&offset=" + offsetVar);
 
@@ -46,6 +47,7 @@ function clicked(e) {
 
 function getSelectedText() {
     var eventType = "highlighted";
+  var offsetVar = document.documentElement.scrollTop + "px";
     var txt = "";
     var title = document.title;
     if (typeof window.getSelection != "undefined") {
@@ -59,7 +61,7 @@ function getSelectedText() {
   } else {// code for IE6, IE5
       xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
     }
-  xmlhttp.open("POST","phpwrite2.php",true);
+  xmlhttp.open("POST","/literacyresearch/phpwrite2.php",true);
   xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
   xmlhttp.send("title=" + title + "&webevent=" + eventType + "&content=" + txt+ "&offset=" + offsetVar);
 
@@ -74,13 +76,14 @@ document.onkeypress = function(evt) {
     var charCode = evt.keyCode || evt.which;
     var eventType = "key pressed"
     var charStr = "\"" + String.fromCharCode(charCode) + "\"";
+  var offsetVar = document.documentElement.scrollTop + "px";
     var xmlhttp;
   if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
     xmlhttp=new XMLHttpRequest();
   } else {// code for IE6, IE5
       xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
     }
-  xmlhttp.open("POST","phpwrite2.php",true);
+  xmlhttp.open("POST","/literacyresearch/phpwrite2.php",true);
  // xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
   xmlhttp.send("title=" + title + "&webevent=" + eventType + "&content=" + charStr+ "&offset=" + offsetVar);
 
@@ -92,6 +95,7 @@ function resize() {
   var w = window.outerWidth;
     var h = window.outerHeight;
     var eventType = "resize"
+  var offsetVar = document.documentElement.scrollTop + "px";
     var txt = "Window size: width=" + w + ", height=" + h;
     //document.getElementById("demo").innerHTML = txt;
     var xmlhttp;
@@ -100,7 +104,7 @@ function resize() {
   } else {// code for IE6, IE5
       xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
     }
-  xmlhttp.open("POST","phpwrite2.php",true);
+  xmlhttp.open("POST","/literacyresearch/phpwrite2.php",true);
   xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
   xmlhttp.send("title=" + title + "&webevent=" + eventType + "&content=" + txt+ "&offset=" + offsetVar);
 
@@ -120,6 +124,7 @@ function getDocHeight() {
 function amountscrolled(){
   var title = document.title;
     var eventType = "scrolled"
+  var offsetVar = document.documentElement.scrollTop + "px";
     var winheight= window.innerHeight || (document.documentElement || document.body).clientHeight
     var docheight = getDocHeight()
     var scrollTop = window.pageYOffset || (document.documentElement || document.body.parentNode || document.body).scrollTop
@@ -133,7 +138,7 @@ function amountscrolled(){
   } else {// code for IE6, IE5
       xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
     }
-  xmlhttp.open("POST","phpwrite2.php",true);
+  xmlhttp.open("POST","/literacyresearch/phpwrite2.php",true);
   xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
   xmlhttp.send("title=" + title + "&webevent=" + eventType + "&content=" + scrollString+ "&offset=" + offsetVar);
 
